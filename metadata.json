@@ -1,0 +1,5 @@
+{
+  "name": "SalesPro PWA",
+  "description": "A comprehensive Sales Management System for agents and managers, featuring offline support, real-time inventory tracking, and advanced analytics.",
+  "requestFramePermissions": ["camera"]
+}
