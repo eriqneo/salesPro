@@ -88,31 +88,31 @@ export default function AgentDashboard() {
       <div className="flex flex-col min-h-full pb-28">
         <div className="p-5 space-y-8">
           {/* Mission Status Hero Card */}
-          <Card className="bg-[#0F172A] border-none rounded-[32px] shadow-2xl overflow-hidden relative group">
+          <Card className="bg-[#0F172A] border-none rounded-[28px] shadow-2xl overflow-hidden relative group">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,#0D948840,transparent_70%)] pointer-events-none" />
             <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-teal-500/10 blur-[80px] rounded-full pointer-events-none" />
             
-            <CardContent className="p-8 relative z-10">
+            <CardContent className="p-6 relative z-10">
               <div className="flex items-center justify-between gap-6">
                 <div className="flex-1 space-y-4">
                   <div>
-                    <h3 className="text-xs font-black uppercase tracking-[0.2em] text-teal-400 mb-1">Mission Status</h3>
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-400 mb-1">Mission Status</h3>
                     <p className="text-3xl font-black text-white tracking-tighter">
                       {stats.achievedCalls} / {stats.targetCalls}
                     </p>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Daily Calls Achieved</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Daily Calls Achieved</p>
                   </div>
                   
-                  <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${Math.min((stats.achievedCalls / stats.targetCalls) * 100, 100)}%` }}
-                      className="h-full bg-gradient-to-r from-teal-600 to-teal-400"
+                      className="h-full bg-gradient-to-r from-teal-500 to-teal-300 shadow-[0_0_12px_rgba(20,184,166,0.4)]"
                     />
                   </div>
                   
                   <p className="text-[11px] text-white font-black uppercase tracking-wider flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
+                    <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse shadow-[0_0_8px_rgba(45,212,191,0.6)]" />
                     {stats.targetCalls - stats.achievedCalls > 0 
                       ? `${stats.targetCalls - stats.achievedCalls} calls remaining`
                       : "Daily Target Met!"}
@@ -124,9 +124,10 @@ export default function AgentDashboard() {
                   <ProgressRing 
                     current={stats.achievedCalls} 
                     target={stats.targetCalls} 
-                    size={100} 
+                    size={90} 
                     strokeWidth={8}
                     color="#0D9488"
+                    textColor="text-white"
                   />
                 </div>
               </div>
@@ -213,11 +214,11 @@ export default function AgentDashboard() {
                     >
                       {/* Timeline Dot */}
                       <div className={cn(
-                        "absolute left-[-9px] top-1 w-4 h-4 rounded-full border-4 border-white shadow-sm transition-transform group-active:scale-125",
+                        "absolute left-0 -translate-x-1/2 top-1.5 w-3.5 h-3.5 rounded-full border-[3px] border-white shadow-sm transition-transform group-active:scale-125 z-10",
                         isSale ? "bg-teal-500" : "bg-amber-500"
                       )} />
                       
-                      <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm active:bg-slate-50 transition-all flex items-center gap-4">
+                      <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm active:bg-slate-50 active:scale-[0.98] transition-all flex items-center gap-4">
                         <div className={cn(
                           "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
                           isSale ? "bg-teal-50 text-teal-600" : "bg-amber-50 text-amber-600"
@@ -225,7 +226,7 @@ export default function AgentDashboard() {
                           {isSale ? <ShoppingBag className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-bold text-slate-900 truncate tracking-tight">
+                          <p className="text-sm font-black text-slate-900 truncate tracking-tight">
                             {isSale ? (shop?.name || 'New Sale Recorded') : 'Daily Report Submitted'}
                           </p>
                           <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-0.5">
@@ -261,25 +262,25 @@ function KPIStatsCard({ label, value, progress, icon, accentColor }: {
   accentColor: string
 }) {
   return (
-    <Card className="bg-white border-none rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden relative">
-      <div className={cn("absolute left-0 top-0 bottom-0 w-1.5", accentColor)} />
+    <Card className="bg-white border-none rounded-3xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] overflow-hidden relative">
+      <div className={cn("absolute left-0 top-0 bottom-0 w-1.5 rounded-l-3xl", accentColor)} />
       <CardContent className="p-5 space-y-4">
         <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center">
           {icon}
         </div>
         <div className="space-y-1">
-          <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400">{label}</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-500">{label}</p>
           <p className="text-xl font-black text-slate-900 tracking-tight">{value}</p>
         </div>
         <div className="space-y-1.5">
-          <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
+          <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
             <motion.div 
               initial={{ width: 0 }}
               animate={{ width: `${Math.min(progress, 100)}%` }}
               className={cn("h-full", accentColor)}
             />
           </div>
-          <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-600">
             {Math.round(progress)}% of daily target
           </p>
         </div>
@@ -298,9 +299,9 @@ function QuickActionBlock({ icon, label, onClick, gradient, iconColor }: {
   return (
     <button 
       onClick={onClick}
-      className="flex flex-col items-center gap-3 p-5 rounded-3xl bg-white shadow-[0_4px_16px_rgba(0,0,0,0.03)] border border-slate-50 active:scale-95 transition-all group"
+      className="flex flex-col items-center gap-3 p-5 rounded-3xl bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-50 active:scale-[0.96] transition-all group"
     >
-      <div className={cn("w-16 h-16 rounded-[22px] flex items-center justify-center bg-gradient-to-br transition-transform group-hover:rotate-6", gradient, iconColor)}>
+      <div className={cn("w-16 h-16 rounded-[22px] flex items-center justify-center bg-gradient-to-br transition-all group-active:scale-90", gradient, iconColor)}>
         {icon}
       </div>
       <span className="text-[10px] font-black uppercase tracking-widest text-slate-900">{label}</span>

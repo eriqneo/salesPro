@@ -63,12 +63,12 @@ export default function ShopsPage() {
   if (selectedShopId && selectedShop) {
     return (
       <div className="flex flex-col min-h-full pb-32">
-        <div className="bg-[#0F172A] pt-[calc(env(safe-area-inset-top)+16px)] pb-12 px-5 relative overflow-hidden">
+        <div className="bg-[#0F172A] pt-[calc(max(env(safe-area-inset-top),20px)+16px)] pb-12 px-5 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,#0D948830,transparent_70%)]" />
           
           <button 
             onClick={() => setSelectedShopId(null)}
-            className="relative z-10 w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white active:scale-90 transition-transform mb-6"
+            className="relative z-10 w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-white active:scale-90 transition-transform mb-6"
           >
             <ChevronRight className="w-5 h-5 rotate-180" />
           </button>
@@ -83,15 +83,19 @@ export default function ShopsPage() {
                 <Badge className="bg-teal-500/20 text-teal-300 border-none text-[9px] font-black uppercase tracking-widest px-2.5 py-1">
                   {selectedShop.routeName}
                 </Badge>
-                <div className="w-1 h-1 rounded-full bg-slate-600" />
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{selectedShop.region}</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-slate-500" />
+                <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider">{selectedShop.region}</span>
               </div>
             </div>
           </div>
         </div>
         
-        <div className="p-5 space-y-8 -mt-6 relative z-10 animate-in slide-in-from-bottom duration-500">
-          <Card className="bg-white border-none rounded-[32px] shadow-xl shadow-slate-200/50 overflow-hidden">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-5 space-y-8 -mt-6 relative z-10"
+        >
+          <Card className="bg-white border-none rounded-[32px] shadow-2xl shadow-slate-300/40 overflow-hidden">
             <CardContent className="p-8">
               <div className="grid grid-cols-2 gap-6 w-full">
                 <div className="space-y-1.5">
@@ -134,15 +138,17 @@ export default function ShopsPage() {
               </Button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     );
   }
 
   return (
     <PullToRefresh onRefresh={handleRefresh}>
-      <div className="flex flex-col min-h-full pb-32">
-        <div className="p-5 space-y-8">
+      <div className="flex flex-col min-h-full pb-32 bg-slate-50">
+        <AgentPageHeader title="Shops & Outlets" showBack={false} />
+        
+        <div className="pt-[calc(64px+env(safe-area-inset-top)+24px)] p-5 space-y-8">
           {/* Refined Search Pill */}
           <div className="relative group">
             <div className="absolute inset-0 bg-teal-500/5 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
@@ -159,8 +165,8 @@ export default function ShopsPage() {
 
           <div className="space-y-5">
             <div className="flex items-center justify-between px-1">
-              <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">My Portfolio</h3>
-              <span className="text-[10px] font-black text-teal-600 bg-teal-50 px-2 py-1 rounded-lg uppercase tracking-widest">
+              <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">My Portfolio</h3>
+              <span className="text-[10px] font-black text-teal-600 bg-teal-50 px-2.5 py-1.5 rounded-xl uppercase tracking-widest shadow-sm">
                 {filteredShops.length} Total
               </span>
             </div>
@@ -193,21 +199,21 @@ export default function ShopsPage() {
                       <div className="flex-1 space-y-2">
                         <div className="flex items-center justify-between">
                           <p className="font-black text-slate-900 text-xl tracking-tight leading-none">{shop.name}</p>
-                          <Badge className="bg-slate-100 text-slate-500 border-none text-[8px] uppercase font-black px-2 py-0.5 tracking-[0.15em] group-hover:bg-teal-500 group-hover:text-white transition-colors">
+                          <Badge className="bg-slate-100 text-slate-500 border-none text-[10px] uppercase font-bold px-2.5 py-1 tracking-wider group-hover:bg-teal-500 group-hover:text-white transition-colors rounded-lg">
                             {shop.routeName}
                           </Badge>
                         </div>
-                        <div className="flex items-center gap-4 text-[10px] text-slate-400 font-black uppercase tracking-widest">
+                        <div className="flex items-center gap-4 text-[11px] text-slate-400 font-bold uppercase tracking-wider">
                           <div className="flex items-center gap-1.5">
                             <User className="w-3.5 h-3.5" /> {shop.ownerName}
                           </div>
-                          <div className="flex items-center justify-center w-1 h-1 rounded-full bg-slate-200" />
+                          <div className="flex items-center justify-center w-1.5 h-1.5 rounded-full bg-slate-200" />
                           <div className="flex items-center gap-1.5">
                             <MapPin className="w-3.5 h-3.5" /> {shop.region}
                           </div>
                         </div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-teal-600 flex items-center gap-1.5">
-                          <span className="w-1 h-1 rounded-full bg-teal-500" />
+                        <p className="text-[11px] font-black uppercase tracking-widest text-teal-600/80 flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-teal-500 shadow-[0_0_8px_rgba(20,184,166,0.4)]" />
                           Last Visit: <span className="text-slate-900">{getLastVisit(shop.id)}</span>
                         </p>
                       </div>
@@ -221,13 +227,13 @@ export default function ShopsPage() {
         </div>
 
         {/* Labeled Floating Bottom Action */}
-        <div className="fixed bottom-24 left-0 right-0 px-6 z-40">
+        <div className="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-0 right-0 px-6 z-40">
           <Button
             onClick={() => {
               haptics.medium();
               setIsAddModalOpen(true);
             }}
-            className="max-w-md mx-auto w-full h-16 rounded-[24px] bg-[#0F172A] shadow-2xl shadow-slate-900/30 flex items-center justify-center gap-3 border-none animate-in zoom-in duration-300 active:scale-[0.98] transition-all"
+            className="max-w-md mx-auto w-full h-16 rounded-[24px] bg-[#0F172A] shadow-[0_12px_40px_rgba(15,23,42,0.3)] flex items-center justify-center gap-3 border-none animate-in zoom-in duration-300 active:scale-[0.98] transition-all"
           >
             <Plus className="w-6 h-6 text-teal-400 stroke-[3px]" />
             <span className="text-sm font-black uppercase tracking-[0.2em] text-white">Register New Shop</span>

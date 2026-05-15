@@ -82,32 +82,33 @@ export default function InventoryPage() {
 
   return (
     <PullToRefresh onRefresh={handleRefresh}>
-      <div className="flex flex-col min-h-full pb-32">
-        {/* Sticky Low Stock Banner */}
-        <AnimatePresence>
-          {lowStockItems.length > 0 && (
-            <motion.div 
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="bg-rose-500 text-white px-5 py-3 flex items-center justify-between shadow-lg relative z-20"
-            >
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center">
-                  <Package className="w-4 h-4" />
-                </div>
-                <span className="text-xs font-black uppercase tracking-wider">
-                  {lowStockItems.length} items critical
-                </span>
-              </div>
-              <button className="text-[10px] font-black uppercase tracking-[0.2em] bg-white/20 px-3 py-1.5 rounded-lg active:scale-95 transition-transform">
-                Restock Now →
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      <div className="flex flex-col min-h-full pb-32 bg-slate-50">
+        <AgentPageHeader title="Live Inventory" showBack={false} />
 
-        <div className="p-5 space-y-8">
+        <div className="pt-[calc(64px+env(safe-area-inset-top)+24px)] p-5 space-y-8">
+          {/* Sticky Low Stock Banner */}
+          <AnimatePresence>
+            {lowStockItems.length > 0 && (
+              <motion.div 
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="bg-rose-500 text-white px-5 py-4 rounded-[24px] flex items-center justify-between shadow-xl shadow-rose-500/20 mb-6"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center">
+                    <Package className="w-5 h-5" />
+                  </div>
+                  <span className="text-[11px] font-black uppercase tracking-wider">
+                    {lowStockItems.length} items critical
+                  </span>
+                </div>
+                <button className="text-[10px] font-black uppercase tracking-[0.2em] bg-white/20 px-3 py-2 rounded-xl active:scale-95 transition-transform">
+                  Restock →
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
           {/* Refined Search Pill */}
           <div className="relative group">
             <div className="absolute inset-0 bg-teal-500/5 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
@@ -129,18 +130,18 @@ export default function InventoryPage() {
           </div>
 
           <Tabs defaultValue="current" className="w-full space-y-8">
-            <TabsList className="grid w-full grid-cols-2 bg-slate-100/50 p-1 rounded-2xl border border-slate-200/30">
+            <TabsList className="grid w-full grid-cols-2 bg-slate-100 p-1.5 rounded-[20px] border border-slate-200 shadow-inner">
               <TabsTrigger 
                 value="current" 
                 onClick={() => haptics.light()}
-                className="rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-md font-black text-[10px] uppercase tracking-[0.2em] h-11"
+                className="rounded-2xl data-[state=active]:bg-white data-[state=active]:shadow-lg font-black text-[10px] uppercase tracking-[0.2em] h-12 transition-all"
               >
                 Current Stock
               </TabsTrigger>
               <TabsTrigger 
                 value="history" 
                 onClick={() => haptics.light()}
-                className="rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-md font-black text-[10px] uppercase tracking-[0.2em] h-11"
+                className="rounded-2xl data-[state=active]:bg-white data-[state=active]:shadow-lg font-black text-[10px] uppercase tracking-[0.2em] h-12 transition-all"
               >
                 Movement Log
               </TabsTrigger>
@@ -177,36 +178,36 @@ export default function InventoryPage() {
                             <div className="space-y-1">
                               <h3 className="font-black text-slate-900 text-xl tracking-tight leading-none">{item.productName}</h3>
                               <div className="flex items-center gap-2">
-                                <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">{item.productSku}</p>
-                                <div className="w-1 h-1 rounded-full bg-slate-200" />
-                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                                <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{item.productSku}</p>
+                                <div className="w-1 h-1 rounded-full bg-slate-300" />
+                                <p className="text-[10px] text-slate-600 font-bold uppercase tracking-wider">
                                   {distributors.find(d => d.id === item.distributorId)?.name || 'Direct'}
                                 </p>
                               </div>
                             </div>
                             
                             <div className={cn(
-                              "w-12 h-12 rounded-[18px] flex items-center justify-center shrink-0 border-2",
+                              "px-3 py-1.5 rounded-full flex items-center justify-center shrink-0 border shadow-sm",
                               isCritical ? "bg-rose-50 border-rose-100 text-rose-600" : 
                               isLow ? "bg-amber-50 border-amber-100 text-amber-600" : 
                               "bg-teal-50 border-teal-100 text-teal-600"
                             )}>
-                              <span className="text-sm font-black tracking-tighter">
+                              <span className="text-[11px] font-black tracking-tighter">
                                 {Math.round((item.quantityCartons / 20) * 100)}%
                               </span>
                             </div>
                           </div>
                           
                           <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 group-hover:bg-white group-hover:border-slate-200 transition-all">
+                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 group-hover:bg-white group-hover:border-slate-200 transition-all">
                               <div className="flex items-center justify-between mb-1">
-                                <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest">Cartons</p>
+                                <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest">Cartons</p>
                                 {isCritical && <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />}
                               </div>
                               <p className="text-2xl font-black text-slate-900 tracking-tighter">{item.quantityCartons}</p>
                             </div>
-                            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 group-hover:bg-white group-hover:border-slate-200 transition-all">
-                              <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest mb-1">Packets</p>
+                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 group-hover:bg-white group-hover:border-slate-200 transition-all">
+                              <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest mb-1">Packets</p>
                               <p className="text-2xl font-black text-slate-900 tracking-tighter">{item.quantityPackets}</p>
                             </div>
                           </div>
@@ -231,7 +232,7 @@ export default function InventoryPage() {
                 agentLogs.map((log, idx) => (
                   <div key={log.id} className="relative pl-8 pb-8 last:pb-0 group">
                     <div className={cn(
-                      "absolute left-[-9px] top-1 w-4 h-4 rounded-full border-4 border-white shadow-sm",
+                      "absolute left-0 -translate-x-1/2 top-1.5 w-3.5 h-3.5 rounded-full border-[3px] border-white shadow-sm z-10",
                       log.type === 'addition' ? "bg-teal-500" : "bg-rose-500"
                     )} />
                     
@@ -275,7 +276,7 @@ export default function InventoryPage() {
         )}
 
         {/* Sticky Bottom Action Bar */}
-        <div className="fixed bottom-24 left-0 right-0 px-6 z-40">
+        <div className="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] left-0 right-0 px-6 z-40">
           <div className="max-w-md mx-auto flex gap-3">
             <button 
               onClick={() => setIsScannerOpen(true)}

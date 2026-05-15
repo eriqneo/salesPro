@@ -57,9 +57,10 @@ export const AgentPageHeader: React.FC<AgentPageHeaderProps> = ({
   return (
     <>
       <header className={cn(
-        "fixed top-0 left-0 right-0 z-40 bg-gradient-to-br from-slate-900 to-teal-600 h-[calc(56px+env(safe-area-inset-top))] pt-[calc(env(safe-area-inset-top)+8px)] px-4 flex items-center justify-between",
+        "fixed top-0 left-0 right-0 z-40 bg-slate-900/90 backdrop-blur-md h-[calc(56px+env(safe-area-inset-top))] pt-[calc(env(safe-area-inset-top)+4px)] px-5 flex items-center justify-between border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)]",
         className
       )}>
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-transparent pointer-events-none" />
         <div className="flex-1 flex items-center">
           {showBack && (
             <button 

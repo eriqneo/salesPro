@@ -66,23 +66,22 @@ export const AgentBottomNav: React.FC = () => {
     <nav 
       role="navigation" 
       aria-label="Main navigation"
-      className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-slate-200/50 h-[calc(68px+env(safe-area-inset-bottom))] px-3 pb-[env(safe-area-inset-bottom)] rounded-t-[32px] shadow-[0_-8px-32px_rgba(15,23,42,0.08)] z-50 flex items-center justify-between"
+      className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-2xl border-t border-slate-200/50 h-[calc(76px+env(safe-area-inset-bottom))] px-4 pb-[env(safe-area-inset-bottom)] rounded-t-[36px] shadow-[0_-8px-40px_rgba(15,23,42,0.12)] z-50 flex items-center justify-between"
     >
       {tabs.map((tab) => {
         if (tab.isFab) {
           return (
-            <div key={tab.id} className="relative flex flex-col items-center -mt-12 px-2">
+            <div key={tab.id} className="relative flex flex-col items-center -mt-14 px-1">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleFabClick}
                 aria-label="Record a new sale"
-                className="flex items-center gap-2 px-5 h-[56px] rounded-[24px] bg-[#0F172A] text-white shadow-[0_8px_24px_rgba(15,23,42,0.3)] relative overflow-hidden group"
+                className="flex items-center gap-2 px-6 h-[60px] rounded-[24px] bg-[#0F172A] text-white shadow-[0_12px_32px_rgba(13,148,136,0.35)] relative overflow-hidden group"
               >
-                {/* Glass shimmer effect */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-teal-500/0 via-teal-500/20 to-teal-500/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                <PlusIcon className="w-6 h-6 stroke-[2.5px]" />
-                <span className="text-sm font-black uppercase tracking-widest">Sale</span>
+                <PlusIcon className="w-6 h-6 stroke-[3px] text-teal-400" />
+                <span className="text-[11px] font-black uppercase tracking-[0.2em]">Sale</span>
               </motion.button>
             </div>
           );
@@ -100,38 +99,42 @@ export const AgentBottomNav: React.FC = () => {
             aria-label={tab.label}
             onClick={() => handleTabClick(tab.path!)}
             className={({ isActive }) => cn(
-              "relative flex flex-col items-center justify-center min-w-[64px] h-full gap-1 transition-all duration-300",
-              isActive ? "text-teal-600 scale-110" : "text-slate-400"
+              "relative flex flex-col items-center justify-center min-w-[68px] h-full transition-all duration-300 px-2",
+              isActive ? "text-teal-600" : "text-slate-400"
             )}
           >
-            <div className="relative p-1">
-              {isActive && (
-                <motion.div
-                  layoutId="activeTabPill"
-                  className="absolute inset-0 bg-teal-50 rounded-xl -z-10"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-              <Icon className={cn("w-6 h-6 transition-transform", isActive ? "scale-110" : "scale-100")} />
-              
-              {tab.badge && (
-                <div className={cn(
-                  "absolute -top-1 -right-1 min-w-[16px] h-4 rounded-full border-2 border-white flex items-center justify-center text-[8px] font-black text-white px-1 shadow-sm z-20",
-                  tab.badge === 'red' && "bg-rose-500",
-                  tab.badge === 'amber' && "bg-amber-500",
-                  tab.badge === 'green' && "bg-emerald-500"
-                )}>
-                  {/* For simplicity using dots if no count, but the plan mentioned number badges */}
-                  {/* Since I don't have counts here easily, I'll keep them as dots or small indicators as per the badge prop */}
-                </div>
-              )}
+            <div className="relative flex flex-col items-center gap-1.5 z-10">
+              <div className="relative p-1">
+                <Icon className={cn(
+                  "w-6 h-6 transition-transform", 
+                  isActive ? "scale-110 drop-shadow-[0_0_8px_rgba(13,148,136,0.5)]" : "scale-100"
+                )} />
+                
+                {tab.badge && (
+                  <div className={cn(
+                    "absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full border-2 border-white flex items-center justify-center text-[9px] font-black text-white px-1 shadow-md z-20",
+                    tab.badge === 'red' && "bg-rose-500",
+                    tab.badge === 'amber' && "bg-amber-500",
+                    tab.badge === 'green' && "bg-emerald-500"
+                  )}>
+                  </div>
+                )}
+              </div>
+              <span className={cn(
+                "text-[10px] uppercase tracking-[0.12em] transition-all",
+                isActive ? "font-black" : "font-bold"
+              )}>
+                {tab.label}
+              </span>
             </div>
-            <span className={cn(
-              "text-[9px] uppercase tracking-[0.1em]",
-              isActive ? "font-black" : "font-bold"
-            )}>
-              {tab.label}
-            </span>
+
+            {isActive && (
+              <motion.div
+                layoutId="activeTabPill"
+                className="absolute inset-x-1 inset-y-2 bg-teal-500/5 border border-teal-500/10 rounded-2xl -z-0"
+                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+              />
+            )}
           </NavLink>
         );
       })}
